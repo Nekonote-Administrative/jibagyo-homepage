@@ -263,8 +263,9 @@
     }
 
     .hero-image-full img {
-      width: 80%;
-      max-width: 960px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       position: relative;
       z-index: 1;
     }
@@ -544,7 +545,7 @@
     .solution-img-frame {
       background: var(--cream);
       border: 1px solid var(--ink-10);
-      padding: 32px;
+      padding: 0;
     }
 
     .solution-img-frame img { width: 100%; }
@@ -588,76 +589,82 @@
 
 
     /* ——— Features ——— */
-    .features-intro {
+    .features-header {
+      margin-bottom: 64px;
+    }
+
+    .features-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: end;
-      margin-bottom: 56px;
+      gap: 24px;
     }
 
-    .features-icon-strip {
-      background: var(--icon-bg);
-      padding: 24px;
-      margin-bottom: 56px;
-    }
-
-    .features-icon-strip img {
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .features-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid var(--ink-10);
-      border-left: 1px solid var(--ink-10);
-    }
-
-    .feature-item {
+    .feat-card {
+      background: var(--white);
+      border: 1px solid var(--ink-10);
       padding: 40px 36px;
-      border-right: 1px solid var(--ink-10);
-      border-bottom: 1px solid var(--ink-10);
-      position: relative;
-      transition: background 0.4s var(--ease);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.4s var(--ease);
     }
 
-    .feature-item:hover { background: var(--white); }
+    .feat-card:hover {
+      border-color: var(--ink-30);
+    }
 
-    .feature-num {
+    .feat-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .feat-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .feat-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feat-num {
       font-family: var(--mono);
       font-size: 0.7rem;
       color: var(--ink-30);
-      margin-bottom: 16px;
       letter-spacing: 0.08em;
     }
 
-    .feature-name {
+    .feat-name {
       font-family: var(--serif);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--ink);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       line-height: 1.5;
     }
 
-    .feature-desc {
+    .feat-desc {
       font-size: 0.85rem;
       color: var(--ink-50);
       line-height: 1.9;
       margin-bottom: 16px;
+      flex-grow: 1;
     }
 
-    .feature-kw {
+    .feat-kw {
       font-family: var(--mono);
       font-size: 0.68rem;
       color: var(--accent);
       letter-spacing: 0.04em;
     }
 
-    .feature-link {
+    .feat-link {
       display: inline-block;
       margin-top: 12px;
       font-size: 0.78rem;
@@ -666,7 +673,7 @@
       transition: color 0.2s;
     }
 
-    .feature-link:hover {
+    .feat-link:hover {
       color: var(--ink);
     }
 
@@ -1059,11 +1066,36 @@
 
     /* ——— Responsive ——— */
     @media (max-width: 900px) {
-      .nav { display: none; }
-      .mobile-toggle { display: block; }
+      .mobile-toggle { display: none; }
 
-      .hero-image-full img { width: 92%; }
-      .hero-overlay { margin-top: -20vh; padding: 72px 0 60px; }
+      .hero-container {
+        position: relative;
+      }
+
+      .hero-image-full {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        display: block;
+        overflow: hidden;
+      }
+
+      .hero-image-full::before { display: none; }
+
+      .hero-image-full img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      .hero-overlay {
+        position: relative;
+        margin-top: -20vh;
+        padding: 48px 0 40px;
+        background: var(--cream);
+      }
 
       .pain-layout,
       .features-intro,
@@ -1072,8 +1104,22 @@
         gap: 40px;
       }
 
+      .solution-img-frame {
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin-left: calc(-1 * clamp(20px, 4vw, 48px));
+        margin-right: calc(-1 * clamp(20px, 4vw, 48px));
+      }
+
+      .partner-photo {
+        border: none;
+        margin-left: calc(-1 * clamp(20px, 4vw, 48px));
+        margin-right: calc(-1 * clamp(20px, 4vw, 48px));
+      }
+
       .solution-trio,
-      .features-list,
+      .features-grid,
       .value-cols {
         grid-template-columns: 1fr;
       }
@@ -1107,7 +1153,7 @@
       .hero-headline { font-size: 1.5rem; }
       .hero-actions { flex-direction: column; align-items: stretch; }
       .btn-fill, .btn-outline { justify-content: center; }
-      .features-list { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1121,10 +1167,6 @@
         ジバギョーネット
       </a>
       <nav class="nav">
-        <a href="#pain" class="nav-link">課題</a>
-        <a href="#solution" class="nav-link">共同受任</a>
-        <a href="#features" class="nav-link">機能</a>
-        <a href="#partner" class="nav-link">開発体制</a>
         <a href="https://line.me/ti/g/mm-Q7a4aCA" class="nav-entry" target="_blank" rel="noopener">プレエントリー</a>
       </nav>
       <button class="mobile-toggle" aria-label="メニュー">
@@ -1247,58 +1289,70 @@
   <!-- Features -->
   <section class="sec" id="features">
     <div class="wrap">
-      <div class="features-intro reveal">
-        <div>
-          <div class="sec-num">03 ― Features</div>
-          <h2 class="sec-heading">行政書士のための<br>DXツールセット</h2>
-        </div>
-        <div>
-          <p class="sec-lead">
-            事務所の業務効率とディーラーへのアピール力を飛躍的に向上させる4つのプロフェッショナルツールを提供します。
-          </p>
-        </div>
+      <div class="features-header reveal">
+        <div class="sec-num">03 ― Features</div>
+        <h2 class="sec-heading">行政書士のための<br>DXツールセット</h2>
+        <p class="sec-lead">
+          事務所の業務効率とディーラーへのアピール力を飛躍的に向上させる4つのプロフェッショナルツールを提供します。
+        </p>
       </div>
 
-      <div class="features-icon-strip reveal">
-        <picture>
-          <source srcset="assets/icons.webp" type="image/webp">
-          <img src="assets/icons.png" alt="ジバギョーネットDXツール - LINEステータス連携・スケジュール連携・Excel自動化・Webサイト運用の4機能アイコン" loading="lazy">
-        </picture>
-      </div>
-
-      <div class="features-list reveal">
-        <div class="feature-item">
-          <div class="feature-num">01</div>
-          <h4 class="feature-name">稼働状況の可視化</h4>
-          <p class="feature-desc">
+      <div class="features-grid reveal">
+        <div class="feat-card">
+          <div class="feat-card-top">
+            <div class="feat-icon">
+              <img src="assets/icon-line.webp" alt="LINEステータス連携アイコン" loading="lazy">
+            </div>
+            <span class="feat-num">01</span>
+          </div>
+          <h4 class="feat-name">稼働状況の可視化</h4>
+          <p class="feat-desc">
             普段使っているカレンダーアプリと連携し、ディーラーへ「今の忙しさ」をLINEリッチメニューで自動通知。時間が空いたタイミングで折り返し依頼を送信できます。
           </p>
-          <span class="feature-kw">LINE Integration</span>
+          <span class="feat-kw">LINE Integration</span>
         </div>
-        <div class="feature-item">
-          <div class="feature-num">02</div>
-          <h4 class="feature-name">スケジュール連携</h4>
-          <p class="feature-desc">
+
+        <div class="feat-card">
+          <div class="feat-card-top">
+            <div class="feat-icon">
+              <img src="assets/icon-calendar.webp" alt="スケジュール連携アイコン" loading="lazy">
+            </div>
+            <span class="feat-num">02</span>
+          </div>
+          <h4 class="feat-name">スケジュール連携</h4>
+          <p class="feat-desc">
             カレンダーアプリとの自動同期で、案件の対応可否をリアルタイムに管理。予約状況に基づいた通知でミスのないスケジューリングを実現します。
           </p>
-          <span class="feature-kw">Calendar Sync</span>
+          <span class="feat-kw">Calendar Sync</span>
         </div>
-        <div class="feature-item">
-          <div class="feature-num">03</div>
-          <h4 class="feature-name">業務自動化</h4>
-          <p class="feature-desc">
+
+        <div class="feat-card">
+          <div class="feat-card-top">
+            <div class="feat-icon">
+              <img src="assets/icon-excel.webp" alt="Excel自動化アイコン" loading="lazy">
+            </div>
+            <span class="feat-num">03</span>
+          </div>
+          <h4 class="feat-name">業務自動化</h4>
+          <p class="feat-desc">
             複写書類の自動作成と返送管理。Excelとサーバーの提供により、アナログな作業をデジタルで圧倒的に効率化します。
           </p>
-          <span class="feature-kw">Excel &amp; Server</span>
+          <span class="feat-kw">Excel &amp; Server</span>
         </div>
-        <div class="feature-item">
-          <div class="feature-num">04</div>
-          <h4 class="feature-name">事務所Webサイト制作</h4>
-          <p class="feature-desc">
+
+        <div class="feat-card">
+          <div class="feat-card-top">
+            <div class="feat-icon">
+              <img src="assets/icon-web.webp" alt="Webサイト運用アイコン" loading="lazy">
+            </div>
+            <span class="feat-num">04</span>
+          </div>
+          <h4 class="feat-name">事務所Webサイト制作</h4>
+          <p class="feat-desc">
             提携先により2万円でプロフェッショナルなWebサイトを制作。ネット上の「信頼の拠点」を格安で構築できます。
           </p>
-          <span class="feature-kw">Web Branding</span>
-          <a href="https://www.pascalinekasane.com/" class="feature-link" target="_blank" rel="noopener">詳細を見る →</a>
+          <span class="feat-kw">Web Branding</span>
+          <a href="https://www.pascalinekasane.com/" class="feat-link" target="_blank" rel="noopener">詳細を見る →</a>
         </div>
       </div>
     </div>
