@@ -879,8 +879,18 @@
     .value-bg { background: var(--warm); }
 
     .value-header {
-      max-width: 560px;
+      max-width: 640px;
       margin-bottom: 56px;
+    }
+
+    .value-heading-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .value-heading-row .sec-heading {
+      margin-bottom: 0;
     }
 
     .value-cols {
@@ -1438,7 +1448,10 @@
     <div class="wrap">
       <div class="value-header reveal">
         <div class="sec-num">06 ― Value</div>
-        <h2 class="sec-heading">導入がもたらす<br>3つの戦略的価値</h2>
+        <div class="value-heading-row">
+          <h2 class="sec-heading">導入がもたらす<br>3つの戦略的価値</h2>
+          <dotlottie-player src="https://lottie.host/41959bd4-1df8-48cb-ab22-8b66e2907226/2DTZPoDiBt.lottie" background="transparent" speed="1" autoplay style="width:100px;height:100px;flex-shrink:0;"></dotlottie-player>
+        </div>
         <p class="sec-lead">ジバギョーネットは単なるツールではなく、事務所の競争力を根本から変える「インフラ」です。</p>
       </div>
 
@@ -1555,6 +1568,8 @@
         }
       });
     });
+
   </script>
+
 </body>
 </html>
