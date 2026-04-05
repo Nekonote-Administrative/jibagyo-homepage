@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ジバギョーネット｜行政書士・共同受任ネットワーク</title>
+  <meta name="description" content="全国の行政書士と繋がり、遠方の車庫証明も断らない。共同受任ネットワークとDXツールで、ディーラーからの信頼を独占する。">
+  <meta property="og:image" content="assets/og-image.png">
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #0D1B2A;
+      --ink-80: #2B3A4E;
+      --ink-50: #6B7A8D;
+      --ink-30: #9CA8B5;
+      --ink-10: #E1E5EA;
+      --ink-05: #F0F2F4;
+      --cream: #FAFAF8;
+      --white: #FFFFFF;
+      --accent: #00A875;
+      --accent-subtle: #E8F5F0;
+      --accent-deep: #007A55;
+      --warm: #F7F5F0;
+      --icon-bg: #f9fafb;
+      --serif: 'Shippori Mincho', 'YuMincho', 'Yu Mincho', serif;
+      --sans: 'Noto Sans JP', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.8;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 48px);
+    }
+
+    /* ——— Grain overlay ——— */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ——— Header ——— */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0 clamp(20px, 4vw, 48px);
+      transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+
+    .header.is-scrolled {
+      background: rgba(250, 250, 248, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-color: var(--ink-10);
+    }
+
+    .header-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .nav { display: flex; align-items: center; gap: 36px; }
+
+    .nav-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink-50);
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: color 0.25s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: width 0.35s var(--ease);
+    }
+
+    .nav-link:hover { color: var(--ink); }
+    .nav-link:hover::after { width: 100%; }
+
+    .nav-entry {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--ink);
+      padding: 8px 20px;
+      letter-spacing: 0.02em;
+      transition: background 0.3s;
+    }
+
+    .nav-entry:hover { background: var(--ink-80); }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 28px;
+      height: 20px;
+      position: relative;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: var(--ink);
+      position: absolute;
+      left: 0;
+      transition: 0.3s;
+    }
+
+    .mobile-toggle span:nth-child(1) { top: 0; }
+    .mobile-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .mobile-toggle span:nth-child(3) { bottom: 0; }
+
+
+    /* ——— Hero: image-first with scroll overlay ——— */
+    .hero-container {
+      position: relative;
+    }
+
+    .hero-image-full {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-image-full::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(250,250,248,0) 60%, rgba(250,250,248,0.6) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-image-full img {
+      width: 80%;
+      max-width: 960px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: hintFade 2.5s ease-in-out infinite;
+    }
+
+    .hero-scroll-hint span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--ink-30);
+      letter-spacing: 0.1em;
+    }
+
+    .hero-scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 28px;
+      background: var(--ink-30);
+      animation: scrollLine 2.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      40% { transform: scaleY(1); transform-origin: top; }
+      60% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    @keyframes hintFade {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 10;
+      background: var(--cream);
+      padding: 100px 0 80px;
+      margin-top: -30vh;
+    }
+
+    .hero-overlay::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(250,250,248,0) 0%, var(--cream) 100%);
+      pointer-events: none;
+    }
+
+    .hero-text {
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--ink-50);
+      letter-spacing: 0.06em;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--ink-30);
+    }
+
+    .hero-headline {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--accent-deep);
+      position: relative;
+    }
+
+    .hero-headline em::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .hero-body {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: var(--ink-50);
+      max-width: 540px;
+      margin-bottom: 44px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .btn-fill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-fill:hover { background: var(--ink-80); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      border: 1px solid var(--ink-10);
+      transition: border-color 0.3s;
+    }
+
+    .btn-outline:hover { border-color: var(--ink-50); }
+
+    .btn-arrow {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      position: relative;
+    }
+
+    .btn-arrow::before {
+      content: '→';
+      font-family: var(--mono);
+      font-size: 0.85rem;
+    }
+
+
+    /* ——— Section primitives ——— */
+    .sec {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .sec-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--ink-10);
+      border: none;
+      margin: 0;
+    }
+
+    .sec-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-30);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .sec-heading {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .sec-lead {
+      font-size: 0.95rem;
+      color: var(--ink-50);
+      line-height: 2;
+      max-width: 560px;
+    }
+
+
+    /* ——— Pain ——— */
+    .pain-layout {
+      display: grid;
+      grid-template-columns: 5fr 6fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .pain-left { padding-top: 12px; }
+
+    .pain-video-wrap {
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .pain-video-wrap img {
+      width: 100%;
+      display: block;
+    }
+
+    .pain-right h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.6;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .pain-right p {
+      font-size: 0.9rem;
+      color: var(--ink-50);
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    .pain-right p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .pain-callout {
+      margin-top: 28px;
+      padding: 20px 24px;
+      border-left: 2px solid var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    .pain-callout p {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink) !important;
+      margin: 0 !important;
+      line-height: 1.8;
+    }
+
+
+    /* ——— Solution ——— */
+    .solution-bg { background: var(--white); }
+
+    .solution-header {
+      max-width: 560px;
+      margin-bottom: 56px;
+    }
+
+    .solution-img-frame {
+      background: var(--cream);
+      border: 1px solid var(--ink-10);
+      padding: 32px;
+    }
+
+    .solution-img-frame img { width: 100%; }
+
+    .solution-trio {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--ink-10);
+      margin-top: 48px;
+      border: 1px solid var(--ink-10);
+    }
+
+    .solution-trio-item {
+      background: var(--white);
+      padding: 36px 28px;
+    }
+
+    .trio-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .trio-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .trio-desc {
+      font-size: 0.82rem;
+      color: var(--ink-50);
+      line-height: 1.8;
+    }
+
+
+    /* ——— Features ——— */
+    .features-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 56px;
+    }
+
+    .features-icon-strip {
+      background: var(--icon-bg);
+      padding: 24px;
+      margin-bottom: 56px;
+    }
+
+    .features-icon-strip img {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .features-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--ink-10);
+      border-left: 1px solid var(--ink-10);
+    }
+
+    .feature-item {
+      padding: 40px 36px;
+      border-right: 1px solid var(--ink-10);
+      border-bottom: 1px solid var(--ink-10);
+      position: relative;
+      transition: background 0.4s var(--ease);
+    }
+
+    .feature-item:hover { background: var(--white); }
+
+    .feature-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--ink-30);
+      margin-bottom: 16px;
+      letter-spacing: 0.08em;
+    }
+
+    .feature-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--ink-50);
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+
+    .feature-kw {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+
+    /* ——— Video ——— */
+    .video-sec {
+      background: var(--ink);
+      padding: 100px 0;
+      color: var(--white);
+    }
+
+    .video-sec .sec-num { color: var(--ink-50); }
+    .video-sec .sec-heading { color: var(--white); }
+    .video-sec .sec-lead { color: var(--ink-30); }
+
+    .video-header {
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto 56px;
+    }
+
+    .video-frame {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--ink-80);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .video-frame-bar {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .vf-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .video-frame-body {
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vf-play {
+      width: 64px;
+      height: 64px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .vf-play:hover {
+      border-color: var(--accent);
+      background: rgba(0, 168, 117, 0.08);
+    }
+
+    .vf-play svg {
+      width: 20px;
+      height: 20px;
+      fill: rgba(255,255,255,0.5);
+      margin-left: 3px;
+    }
+
+    .vf-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.35);
+      font-weight: 400;
+    }
+
+    .vf-sub {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.18);
+      margin-top: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    .video-frame-progress {
+      height: 2px;
+      background: rgba(255,255,255,0.06);
+    }
+
+
+    /* ——— Partner ——— */
+    .partner-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .partner-photo {
+      border: 1px solid var(--ink-10);
+      overflow: hidden;
+    }
+
+    .partner-photo img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: grayscale(0.15);
+      transition: filter 0.5s;
+    }
+
+    .partner-photo:hover img { filter: grayscale(0); }
+
+    .partner-body .sec-heading { margin-bottom: 8px; }
+
+    .partner-co {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .partner-co a {
+      color: var(--accent);
+      transition: color 0.2s;
+    }
+
+    .partner-co a:hover {
+      color: var(--accent-deep);
+    }
+
+    .partner-body p {
+      font-size: 0.9rem;
+      color: var(--ink-50);
+      line-height: 2;
+      margin-bottom: 16px;
+    }
+
+    .partner-logo-block {
+      margin-top: 32px;
+      padding: 24px 28px;
+      background: var(--white);
+      border: 1px solid var(--ink-10);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .partner-logo-block img {
+      height: 32px;
+      width: auto;
+    }
+
+    .partner-logo-block .plb-text {
+      font-size: 0.78rem;
+      color: var(--ink-50);
+      line-height: 1.6;
+    }
+
+    .partner-logo-block .plb-text a {
+      color: var(--accent);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .partner-logo-block .plb-text a:hover {
+      color: var(--accent-deep);
+    }
+
+    .partner-list {
+      list-style: none;
+      margin-top: 28px;
+      border-top: 1px solid var(--ink-10);
+    }
+
+    .partner-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--ink-10);
+      font-size: 0.88rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .partner-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+    }
+
+
+    /* ——— Value ——— */
+    .value-bg { background: var(--warm); }
+
+    .value-header {
+      max-width: 560px;
+      margin-bottom: 56px;
+    }
+
+    .value-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--ink-10);
+      border: 1px solid var(--ink-10);
+    }
+
+    .value-col {
+      background: var(--white);
+      padding: 44px 32px;
+    }
+
+    .value-idx {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--ink-10);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .value-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .value-text {
+      font-size: 0.85rem;
+      color: var(--ink-50);
+      line-height: 1.9;
+    }
+
+
+    /* ——— CTA ——— */
+    .cta-sec {
+      padding: 100px 0 120px;
+      background: var(--cream);
+    }
+
+    .cta-box {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-box .sec-heading { max-width: 100%; }
+
+    .cta-copy {
+      font-size: 0.9rem;
+      color: var(--ink-50);
+      line-height: 2;
+      margin-bottom: 40px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 40px;
+      background: #06C755;
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .cta-line:hover { background: #05B34C; transform: translateY(-1px); }
+
+    .cta-line svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--white);
+    }
+
+    .cta-footnote {
+      font-size: 0.75rem;
+      color: var(--ink-30);
+      margin-top: 20px;
+      line-height: 1.8;
+    }
+
+
+    /* ——— Footer ——— */
+    .footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.4);
+      padding: 40px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo .logo-mark {
+      border-color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.5);
+    }
+
+    .footer-links { display: flex; gap: 28px; }
+
+    .footer-links a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+    }
+
+    .footer-pascaline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      transition: color 0.2s;
+    }
+
+    .footer-pascaline:hover { color: rgba(255,255,255,0.6); }
+
+    .footer-pascaline img {
+      height: 18px;
+      width: auto;
+      opacity: 0.45;
+      filter: brightness(10);
+      transition: opacity 0.2s;
+    }
+
+    .footer-pascaline:hover img { opacity: 0.7; }
+
+
+    /* ——— Reveal animation ——— */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+
+    /* ——— Responsive ——— */
+    @media (max-width: 900px) {
+      .nav { display: none; }
+      .mobile-toggle { display: block; }
+
+      .hero-image-full img { width: 92%; }
+      .hero-overlay { margin-top: -20vh; padding: 72px 0 60px; }
+
+      .pain-layout,
+      .features-intro,
+      .partner-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .solution-trio,
+      .features-list,
+      .value-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .sec { padding: 72px 0; }
+      .video-sec { padding: 72px 0; }
+      .sec-heading { font-size: 1.5rem; }
+      .cta-amount { font-size: 2.4rem; }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+
+      .partner-logo-block {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-headline { font-size: 1.5rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn-fill, .btn-outline { justify-content: center; }
+      .features-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-bar">
+      <a href="#" class="logo">
+        <span class="logo-mark">JN</span>
+        ジバギョーネット
+      </a>
+      <nav class="nav">
+        <a href="#pain" class="nav-link">課題</a>
+        <a href="#solution" class="nav-link">共同受任</a>
+        <a href="#features" class="nav-link">機能</a>
+        <a href="#partner" class="nav-link">開発体制</a>
+        <a href="https://line.me/ti/g/mm-Q7a4aCA" class="nav-entry" target="_blank" rel="noopener">プレエントリー</a>
+      </nav>
+      <button class="mobile-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- Hero: image-first, text overlays on scroll -->
+  <div class="hero-container">
+    <div class="hero-image-full">
+      <img src="assets/hero.png" alt="ジバギョーネットのダッシュボードとLINEリッチメニュー" width="960" height="540">
+      <div class="hero-scroll-hint">
+        <span>SCROLL</span>
+      </div>
+    </div>
+
+    <section class="hero-overlay">
+      <div class="wrap">
+        <div class="hero-text">
+          <p class="hero-eyebrow reveal">行政書士のための共同受任ネットワーク</p>
+          <h1 class="hero-headline reveal reveal-delay-1">
+            <em>「できない」</em>という回答が、<br>最大の機会損失。
+          </h1>
+          <p class="hero-body reveal reveal-delay-2">
+            遠方の車庫証明を断るたびに、ディーラーとの信頼は少しずつ削られています。ジバギョーネットは、共同受任と最新のDXツールで、あなたの事務所を「全国対応の窓口」へと変革します。
+          </p>
+          <div class="hero-actions reveal reveal-delay-3">
+            <a href="https://line.me/ti/g/mm-Q7a4aCA" class="btn-fill" target="_blank" rel="noopener">
+              プレエントリーに参加
+              <span class="btn-arrow"></span>
+            </a>
+            <a href="#solution" class="btn-outline">仕組みを見る</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <hr class="sec-divider">
+
+
+  <!-- Pain -->
+  <section class="sec" id="pain">
+    <div class="wrap">
+      <div class="pain-layout">
+        <div class="pain-left reveal">
+          <div class="pain-video-wrap">
+            <dotlottie-player src="https://lottie.host/351f5e94-1c28-4fbe-b343-0766268fcf1d/Mx5rGLVX94.lottie" background="transparent" speed="1" loop autoplay style="width:100%;"></dotlottie-player>
+          </div>
+        </div>
+        <div class="pain-right reveal reveal-delay-1">
+          <div class="sec-num">01 ― Issue</div>
+          <h3>一通の電話が、<br>信頼の分かれ道になる。</h3>
+          <p>
+            ディーラーから届く遠方の車庫証明依頼。断るのは簡単ですが、その瞬間、担当者の頭の中には「次からは全国対応の別の事務所に頼もう」という選択肢が生まれます。
+          </p>
+          <p>
+            一度離れたディーラーを呼び戻すのは至難の業です。失うのは1件の報酬ではなく、<strong>「代えの効かないパートナーとしての地位」</strong>そのものです。
+          </p>
+          <div class="pain-callout">
+            <p>目先の利益ではなく、継続的な信頼関係の維持こそが、事務所経営の最重要課題です。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <hr class="sec-divider">
+
+
+  <!-- Solution -->
+  <section class="sec solution-bg" id="solution">
+    <div class="wrap">
+      <div class="solution-header reveal">
+        <div class="sec-num">02 ― Solution</div>
+        <h2 class="sec-heading">共同受任で、全国を<br>あなたの営業エリアに。</h2>
+        <p class="sec-lead">
+          適法な「共同受任」スキームにより、全国の行政書士と業務を分担。ディーラーから見た窓口はあなた一人のまま、すべての案件を完結させます。
+        </p>
+      </div>
+
+      <div class="solution-img-frame reveal">
+        <img src="assets/networks.png" alt="共同受任の仕組み ― 自動車販売店から担当書士、提携書士ネットワークへの流れ">
+      </div>
+
+      <div class="solution-trio reveal">
+        <div class="solution-trio-item">
+          <div class="trio-label">Compliance</div>
+          <h4 class="trio-title">公式な共同受任</h4>
+          <p class="trio-desc">適法なフローで遠方の先生と業務を分担。法令遵守の安心感を確保します。</p>
+        </div>
+        <div class="solution-trio-item">
+          <div class="trio-label">Simplicity</div>
+          <h4 class="trio-title">窓口の一本化</h4>
+          <p class="trio-desc">ディーラーはあなたに頼むだけ。全国の案件がひとつの窓口で完結します。</p>
+        </div>
+        <div class="solution-trio-item">
+          <div class="trio-label">Automation</div>
+          <h4 class="trio-title">事務負担ゼロ</h4>
+          <p class="trio-desc">面倒な書類のやり取りは、提供されるITツールが自動で処理します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <hr class="sec-divider">
+
+
+  <!-- Features -->
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="features-intro reveal">
+        <div>
+          <div class="sec-num">03 ― Features</div>
+          <h2 class="sec-heading">行政書士のための<br>DXツールセット</h2>
+        </div>
+        <div>
+          <p class="sec-lead">
+            事務所の業務効率とディーラーへのアピール力を飛躍的に向上させる4つのプロフェッショナルツールを提供します。
+          </p>
+        </div>
+      </div>
+
+      <div class="features-icon-strip reveal">
+        <img src="assets/icons.png" alt="LINEステータス連携、スケジュール連携、Excel自動化、Webサイト運用">
+      </div>
+
+      <div class="features-list reveal">
+        <div class="feature-item">
+          <div class="feature-num">01</div>
+          <h4 class="feature-name">稼働状況の可視化</h4>
+          <p class="feature-desc">
+            普段使っているカレンダーアプリと連携し、ディーラーへ「今の忙しさ」をLINEリッチメニューで自動通知。時間が空いたタイミングで折り返し依頼を送信できます。
+          </p>
+          <span class="feature-kw">LINE Integration</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">02</div>
+          <h4 class="feature-name">スケジュール連携</h4>
+          <p class="feature-desc">
+            カレンダーアプリとの自動同期で、案件の対応可否をリアルタイムに管理。予約状況に基づいた通知でミスのないスケジューリングを実現します。
+          </p>
+          <span class="feature-kw">Calendar Sync</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">03</div>
+          <h4 class="feature-name">業務自動化</h4>
+          <p class="feature-desc">
+            複写書類の自動作成と返送管理。Excelとサーバーの提供により、アナログな作業をデジタルで圧倒的に効率化します。
+          </p>
+          <span class="feature-kw">Excel &amp; Server</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-num">04</div>
+          <h4 class="feature-name">事務所Webサイト制作</h4>
+          <p class="feature-desc">
+            提携先により2万円でプロフェッショナルなWebサイトを制作。ネット上の「信頼の拠点」を格安で構築できます。
+          </p>
+          <span class="feature-kw">Web Branding</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Video -->
+  <section class="video-sec" id="video">
+    <div class="wrap">
+      <div class="video-header reveal">
+        <div class="sec-num">04 ― Movie</div>
+        <h2 class="sec-heading">30秒でわかる<br>ジバギョーネット</h2>
+        <p class="sec-lead" style="max-width:100%;">共同受任の仕組みと導入メリットを、わかりやすい動画でご紹介します。</p>
+      </div>
+
+      <div class="video-frame reveal">
+        <div class="video-frame-bar">
+          <span class="vf-dot"></span>
+          <span class="vf-dot"></span>
+          <span class="vf-dot"></span>
+        </div>
+        <div class="video-frame-body">
+          <div class="vf-play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p class="vf-label">動画は現在制作中です</p>
+          <p class="vf-sub">COMING SOON</p>
+        </div>
+        <div class="video-frame-progress"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Partner -->
+  <section class="sec" id="partner">
+    <div class="wrap">
+      <div class="partner-layout">
+        <div class="partner-photo reveal">
+          <img src="assets/engineer.png" alt="株式会社Pascalineの開発環境">
+        </div>
+        <div class="partner-body reveal reveal-delay-1">
+          <div class="sec-num">05 ― Partnership</div>
+          <h2 class="sec-heading">「現場の欲しい」を<br>即座に形へ。</h2>
+          <span class="partner-co"><a href="https://pascaline.jp/" target="_blank" rel="noopener">Pascaline Co., Ltd.</a> ― 行政書士専門システム開発</span>
+          <p>
+            コミュニティには行政書士専門のシステム開発会社「<a href="https://pascaline.jp/" target="_blank" rel="noopener" style="color:var(--accent);font-weight:500;">株式会社Pascaline</a>」が参画しています。既存ツールの提供に留まらず、現場の声を直接開発チームへ届けることが可能です。
+          </p>
+          <p>
+            「こんな機能が欲しい」「この業務を自動化したい」といったリクエストをシステムに反映し、ネットワーク全体を共に成長させていきます。
+          </p>
+
+          <div class="partner-logo-block">
+            <a href="https://pascaline.jp/" target="_blank" rel="noopener">
+              <img src="assets/og-image.png" alt="株式会社Pascaline">
+            </a>
+            <div class="plb-text">
+              行政書士業務に特化したシステム開発<br>
+              <a href="https://pascaline.jp/" target="_blank" rel="noopener">pascaline.jp</a>
+            </div>
+          </div>
+
+          <ul class="partner-list">
+            <li>行政書士業務に特化した開発ノウハウ</li>
+            <li>現場の要望に基づくカスタマイズ対応</li>
+            <li>新機能の優先的なフィードバック受付</li>
+            <li>導入・運用のテクニカルサポート</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <hr class="sec-divider">
+
+
+  <!-- Value -->
+  <section class="sec value-bg" id="value">
+    <div class="wrap">
+      <div class="value-header reveal">
+        <div class="sec-num">06 ― Value</div>
+        <h2 class="sec-heading">導入がもたらす<br>3つの戦略的価値</h2>
+        <p class="sec-lead">ジバギョーネットは単なるツールではなく、事務所の競争力を根本から変える「インフラ」です。</p>
+      </div>
+
+      <div class="value-cols reveal">
+        <div class="value-col">
+          <div class="value-idx">01</div>
+          <h4 class="value-title">ディーラーの信頼を独占</h4>
+          <p class="value-text">「全国対応可能」という看板が、新規ディーラー開拓の強力な武器になります。「あの先生に頼めば全国どこでも安心」という評価を獲得します。</p>
+        </div>
+        <div class="value-col">
+          <div class="value-idx">02</div>
+          <h4 class="value-title">他事務所との圧倒的な差別化</h4>
+          <p class="value-text">ITを駆使する事務所としてのブランドイメージが、他事務所との差別化を生み、選ばれる理由を明確にします。</p>
+        </div>
+        <div class="value-col">
+          <div class="value-idx">03</div>
+          <h4 class="value-title">継続案件のLTV最大化</h4>
+          <p class="value-text">一度の信頼が継続的な案件につながります。断らない事務所は、ディーラーにとって「手放せないパートナー」になります。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <hr class="sec-divider">
+
+
+  <!-- CTA -->
+  <section class="cta-sec" id="cta">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div class="sec-num" style="justify-content:center;display:flex;">07 ― Pre-Entry</div>
+        <h2 class="sec-heading" style="text-align:center;">
+          信頼を築くための「環境」は、<br>ここにあります。
+        </h2>
+
+        <p class="cta-copy">
+          現在は正式リリースに向けて創設メンバーを募集しています。まずはLINEグループにご参加いただき、最新情報の受け取りや株式会社Pascalineへのシステム要望にご活用ください。
+        </p>
+
+        <a href="https://line.me/ti/g/mm-Q7a4aCA" class="cta-line" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+          プレエントリーに参加する
+        </a>
+
+        <p class="cta-footnote">
+          正式リリース前の情報交換・先行登録はこちらから。いつでも退会可能です。
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <span class="logo-mark">JN</span>
+          ジバギョーネット
+        </div>
+        <div class="footer-links">
+          <a href="https://pascaline.jp/" target="_blank" rel="noopener">運営会社</a>
+          <a href="#">利用規約</a>
+          <a href="#">プライバシーポリシー</a>
+          <a href="#">お問い合わせ</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 株式会社Pascaline. All rights reserved.</p>
+        <a href="https://pascaline.jp/" class="footer-pascaline" target="_blank" rel="noopener">
+          <img src="assets/og-image.png" alt="Pascaline">
+          Developed by Pascaline
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // Header scroll
+    const hdr = document.getElementById('header');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          hdr.classList.toggle('is-scrolled', window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) {
+          const y = t.getBoundingClientRect().top + window.pageYOffset - 72;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
