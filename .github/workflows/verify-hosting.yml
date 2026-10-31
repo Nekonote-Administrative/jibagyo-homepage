@@ -20,6 +20,8 @@ jobs:
           token = os.environ['CLOUDFLARE_API_TOKEN']
           for label, path in [
               ('accounts', 'accounts'),
+              ('homepage_worker', f'accounts/{account}/workers/scripts/jibagyo-homepage/settings'),
+              ('homepage_service', f'accounts/{account}/workers/services/jibagyo-homepage'),
               ('domain', 'zones?name=jibagyo.site'),
               ('pages', f'accounts/{account}/pages/projects'),
               ('workers', f'accounts/{account}/workers/scripts'),
@@ -31,6 +33,9 @@ jobs:
                   with urllib.request.urlopen(request, timeout=30) as response:
                       data = json.load(response)
                   matches = data.get('result', [])
+                  if not isinstance(matches, list):
+                      print(label, 'found', data.get('success'), 'fields', sorted(matches.keys()))
+                      continue
                   print(label, 'total', len(matches))
                   if label == 'worker_domains':
                       matches = [item for item in matches if 'jibagyo' in json.dumps(item).lower()]
