@@ -19,6 +19,7 @@ jobs:
           account = os.environ['CLOUDFLARE_ACCOUNT_ID']
           token = os.environ['CLOUDFLARE_API_TOKEN']
           for label, path in [
+              ('accounts', 'accounts'),
               ('domain', 'zones?name=jibagyo.site'),
               ('pages', f'accounts/{account}/pages/projects'),
               ('workers', f'accounts/{account}/workers/scripts'),
@@ -29,8 +30,13 @@ jobs:
               try:
                   with urllib.request.urlopen(request, timeout=30) as response:
                       data = json.load(response)
-                  matches = [item for item in data.get('result', []) if 'jibagyo' in json.dumps(item).lower()]
+                  matches = data.get('result', [])
+                  print(label, 'total', len(matches))
+                  if label == 'worker_domains':
+                      matches = [item for item in matches if 'jibagyo' in json.dumps(item).lower()]
                   safe = [{key: item[key] for key in ('id', 'name', 'hostname', 'service', 'zone_name', 'subdomain', 'domains') if key in item} for item in matches]
+                  known = {'90c5a8e0e001b92cd97dd88b08d75e44': 'Daiki Ito Pascaline', '1dc7d924c22a343d61216ad50c63357c': 'Ikko account', 'e3bed2f7c83fefee4e1901035528fe2b': 'Hitokoto media'}
+                  print('deployment account', known.get(account, 'separate account'))
                   print(label, json.dumps(safe))
               except urllib.error.HTTPError as error:
                   print(label, 'HTTP', error.code)
