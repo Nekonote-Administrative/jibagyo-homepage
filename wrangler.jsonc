@@ -10,5 +10,13 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "account_id": "b007d63f9496af1458c8a72931fb4034",
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "jibagyo.site",
+      "custom_domain": true
+    }
   ]
 }
