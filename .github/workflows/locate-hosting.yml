@@ -19,9 +19,10 @@ jobs:
           known = {'90c5a8e0e001b92cd97dd88b08d75e44': 'Daiki Ito Pascaline', '1dc7d924c22a343d61216ad50c63357c': 'Ikko account', 'e3bed2f7c83fefee4e1901035528fe2b': 'Hitokoto media'}
           print('Configured account:', known.get(account, 'another account'), 'whitespace:', original != account, 'length:', len(account))
           token = os.environ['CLOUDFLARE_API_TOKEN'].strip()
+          metadata = {'account_id': account}
           for label, path in [
               ('account', f'accounts/{account}'),
-              ('pages', f'accounts/{account}/pages/projects?per_page=100'),
+              ('pages', f'accounts/{account}/pages/projects?per_page=20'),
               ('domain', 'zones?name=jibagyo.site&per_page=50'),
           ]:
               request = urllib.request.Request('https://api.cloudflare.com/client/v4/' + path, headers={'Authorization': 'Bearer ' + token})
@@ -30,10 +31,18 @@ jobs:
                       data = json.load(response)
                   result = data.get('result', [])
                   print(label, 'pagination:', json.dumps(data.get('result_info', {})))
+                  if label == 'pages': metadata['pages'] = [{'name': item.get('name'), 'domains': item.get('domains')} for item in result]
                   if isinstance(result, list):
                       print(label, [{key: item[key] for key in ('name', 'subdomain', 'domains') if key in item} for item in result])
                   else:
                       print(label, 'success:', data.get('success'), 'fields:', sorted(result.keys()))
               except urllib.error.HTTPError as error:
                   print(label, 'HTTP', error.code)
+          with open('hosting-metadata.json', 'w') as output:
+              json.dump(metadata, output)
           PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-hosting-metadata
+          path: hosting-metadata.json
+          retention-days: 1
