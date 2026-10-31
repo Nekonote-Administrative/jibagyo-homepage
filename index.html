@@ -86,11 +86,16 @@
       --sans: 'Noto Sans JP', sans-serif;
       --mono: 'IBM Plex Mono', monospace;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --sponsor-banner-height: 56px;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-block-end: calc(var(--sponsor-banner-height) + env(safe-area-inset-bottom, 0px) + 20px);
+    }
 
     body {
+      padding-bottom: calc(var(--sponsor-banner-height) + env(safe-area-inset-bottom, 0px));
       font-family: var(--sans);
       color: var(--ink);
       background: var(--cream);
@@ -1074,6 +1079,121 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
 
 
+    /* ——— Sponsor ticker ——— */
+    .sponsor-banner {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1.5vw, 20px);
+      height: calc(var(--sponsor-banner-height) + env(safe-area-inset-bottom, 0px));
+      padding: 0 clamp(12px, 2vw, 24px) env(safe-area-inset-bottom, 0px);
+      border-top: 1px solid var(--ink-10);
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .sponsor-label {
+      flex: 0 0 auto;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .sponsor-viewport {
+      flex: 1 1 0%;
+      min-width: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      border-radius: 4px;
+    }
+
+    .sponsor-viewport::-webkit-scrollbar { display: none; }
+
+    .sponsor-viewport:focus-visible,
+    .sponsor-pause:focus-visible {
+      outline: 2px solid var(--accent-deep);
+      outline-offset: 2px;
+    }
+
+    .sponsor-track { display: flex; width: max-content; }
+
+    .sponsor-banner[data-ready="true"] .sponsor-track {
+      animation: sponsor-scroll 240s linear infinite;
+    }
+
+    .sponsor-track[data-paused="true"],
+    .sponsor-viewport:hover .sponsor-track,
+    .sponsor-viewport:focus-within .sponsor-track {
+      animation-play-state: paused !important;
+    }
+
+    .sponsor-list {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 28px;
+      padding-right: 28px;
+      list-style: none;
+    }
+
+    .sponsor-list li {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 8px;
+      padding-block: 8px;
+      white-space: nowrap;
+    }
+
+    .sponsor-tier {
+      padding: 2px 6px;
+      border: 1px solid var(--ink-10);
+      border-radius: 4px;
+      background: var(--cream);
+      color: var(--ink-50);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .sponsor-tier-special {
+      border-color: #CBAE68;
+      background: #FFF9E8;
+      color: #73551B;
+    }
+
+    .sponsor-name { font-size: 14px; font-weight: 600; }
+
+    .sponsor-pause {
+      display: grid;
+      flex: 0 0 44px;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--ink-10);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .sponsor-pause:hover { background: var(--ink-05); }
+    .sponsor-pause[hidden] { display: none; }
+
+    @keyframes sponsor-scroll {
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sponsor-banner[data-ready="true"] .sponsor-track { animation: none; }
+      .sponsor-copy, .sponsor-pause { display: none; }
+    }
+
     /* ——— Responsive ——— */
     @media (max-width: 900px) {
       .mobile-toggle { display: none; }
@@ -1531,7 +1651,67 @@
   </footer>
 
 
+  <!-- Sponsors: supplied workbook, 支援者一覧!A2:C26, in row order. -->
+  <aside class="sponsor-banner" aria-label="スポンサー">
+    <span class="sponsor-label">SPONSORS</span>
+    <div class="sponsor-viewport" tabindex="0" role="region" aria-label="スポンサー一覧。動きを止めて確認できます">
+      <div class="sponsor-track" data-paused="false">
+        <ul class="sponsor-list" id="sponsor-list">
+          <li><span class="sponsor-tier sponsor-tier-special">スペシャル社会保険労務士スポンサー</span><span class="sponsor-name">社会保険労務士法人ビジネスアシスト</span></li>
+          <li><span class="sponsor-tier">企業スポンサー</span><span class="sponsor-name">株式会社アサユナイト</span></li>
+          <li><span class="sponsor-tier">企業スポンサー</span><span class="sponsor-name">BNI神戸東</span></li>
+          <li><span class="sponsor-tier">企業スポンサー</span><span class="sponsor-name">株式会社高陽社</span></li>
+          <li><span class="sponsor-tier">企業スポンサー</span><span class="sponsor-name">アスライフ＆パートナーズ株式会社</span></li>
+          <li><span class="sponsor-tier">企業スポンサー</span><span class="sponsor-name">行政書士法人乾事務所</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">小縣　文子</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">田中　信行</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">高橋　直裕</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">北橋　恵美子</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">板尾　朋哉</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">山本　尚平</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">光武　正悟</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">角岡　 正章</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">巴　昭二</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">野田　洋平</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">大川　朋子</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">橋本　愛子</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">渡邊　浩州</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">濱口　梓</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">白山　まや</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">藤田　貴子</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">岡田　将吾</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">藤澤　博章</span></li>
+          <li><span class="sponsor-tier">個人スポンサー</span><span class="sponsor-name">匿名希望</span></li>
+        </ul>
+      </div>
+    </div>
+    <button class="sponsor-pause" type="button" aria-pressed="false" aria-label="スポンサーのスクロールを一時停止" hidden>
+      <span aria-hidden="true">Ⅱ</span>
+    </button>
+  </aside>
+
   <script>
+    // Duplicate only the visual list for a continuous loop; assistive technology reads it once.
+    const sponsorBanner = document.querySelector('.sponsor-banner');
+    const sponsorTrack = sponsorBanner.querySelector('.sponsor-track');
+    const sponsorList = document.getElementById('sponsor-list');
+    const sponsorCopy = sponsorList.cloneNode(true);
+    sponsorCopy.removeAttribute('id');
+    sponsorCopy.classList.add('sponsor-copy');
+    sponsorCopy.setAttribute('aria-hidden', 'true');
+    sponsorTrack.appendChild(sponsorCopy);
+    sponsorBanner.dataset.ready = 'true';
+
+    const sponsorPause = sponsorBanner.querySelector('.sponsor-pause');
+    sponsorPause.hidden = false;
+    sponsorPause.addEventListener('click', () => {
+      const paused = sponsorTrack.dataset.paused !== 'true';
+      sponsorTrack.dataset.paused = String(paused);
+      sponsorPause.setAttribute('aria-pressed', String(paused));
+      sponsorPause.setAttribute('aria-label', paused ? 'スポンサーのスクロールを再開' : 'スポンサーのスクロールを一時停止');
+      sponsorPause.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
+    });
+
     // Header scroll
     const hdr = document.getElementById('header');
     let ticking = false;
